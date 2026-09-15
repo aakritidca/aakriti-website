@@ -1,5 +1,11 @@
+import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
+import { authConfig } from "@/lib/auth.config";
+
+// Built directly from the lightweight config, not @/lib/auth — pulling the
+// full config in here (Credentials provider + bcryptjs + Prisma) is what
+// pushed the compiled Edge Function over Vercel's 1MB size limit.
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
