@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Learn about Aakriti Designs & Constructions — an architecture and construction practice based in Banavasi, serving Sirsi and the surrounding region.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
   const [content, serviceCount] = await Promise.all([

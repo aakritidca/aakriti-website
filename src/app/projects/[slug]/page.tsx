@@ -14,7 +14,7 @@ import {
 } from "@/lib/data/projects";
 import { getCompanyContent } from "@/lib/data/content";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

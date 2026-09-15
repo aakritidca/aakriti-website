@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "Building plans, architectural drawings, 3D elevation, interior design, consultancy, and full construction supervision from Aakriti Designs & Constructions.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ServicesPage() {
   const [services, content] = await Promise.all([

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     "Browse completed and ongoing construction and architecture projects by Aakriti Designs & Constructions across Sirsi and Banavasi.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage({
   searchParams,

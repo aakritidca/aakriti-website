@@ -8,7 +8,7 @@ import { getFeaturedProjects } from "@/lib/data/projects";
 import { getCompanyContent, getPublishedServices } from "@/lib/data/content";
 import { ArrowRight } from "lucide-react";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [content, featuredProjects, services] = await Promise.all([

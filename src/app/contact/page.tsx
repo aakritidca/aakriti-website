@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "Get in touch with Aakriti Designs & Constructions — call, email, or send us a message about your project.",
 };
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ContactPage() {
   const content = await getCompanyContent();
