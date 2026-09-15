@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+/*
+  AAKRITI DESIGN SYSTEM
+  Concept 1 "Site & Structure" — warm stone neutrals + deep teal brand accent.
+
+  Brand colours are matched to the printed business card: the teal card ground,
+  the sand panel it sits on, and the gold used for rules and the name block.
+  Hex values are matched by eye from the card artwork, not sampled from source
+  files — if the designer can supply the original swatches, correct them here
+  and every surface follows, since nothing hardcodes a brand colour.
+*/
+
+:root {
+  /* Stone / neutral scale — a warm ramp, deliberately warmer than Tailwind's
+     default stone. The intermediate steps (800/600/400/200/50) are interpolated
+     between the named ones: without them, any `stone-600` in markup silently
+     falls back to Tailwind's cooler default and two neutral ramps end up mixed
+     on the same page. */
+  --stone-950: #1b1a17;
+  --stone-900: #2a2824;
+  --stone-800: #403e37;
+  --stone-700: #57534a;
+  --stone-600: #716c61;
+  --stone-500: #8a8478;
+  --stone-400: #b1aca0;
+  --stone-300: #d8d3c8;
+  --stone-200: #e5e1d8;
+  --stone-100: #f2efe8;
+  --stone-50: #f8f6f1;
+  --paper: #faf8f3;
+  --line: #e2ddd0;
+
+  /* Brand — deep teal, from the Aakriti business card.
+     --teal-800 is the card ground itself; the scale is built around it. */
+  --teal-950: #102f2c;
+  --teal-900: #17403c;
+  --teal-800: #1f4e4a;
+  --teal-700: #275c56;
+  --teal-600: #2e6f67;
+  --teal-500: #3a857c;
+  --teal-100: #c8dcd8;
+  --teal-50: #edf4f2;
+
+  /* Sand — the card's light panel. `--cream` is kept as an alias because
+     existing markup uses bg-cream; both now resolve to the card sand. */
+  --sand-500: #e8d5b5;
+  --sand-300: #f0e3cc;
+  --sand-100: #f7eee0;
+  --cream: #e8d5b5;
+
+  /* Gold — the card's rules and the name block */
+  --gold-600: #a8863f;
+  --gold-500: #c2a15c;
+  --gold-400: #d4b87a;
+
+  /* Status colors */
+  --status-success: #2f6d3a;
+  --status-success-bg: #e3f0e5;
+  --status-warning: #8a7c4f;
+  --status-warning-bg: #f0ede3;
+  --status-error: #a33b3b;
+  --status-error-bg: #f5e6e6;
+
+  --background: var(--paper);
+  --foreground: var(--stone-900);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-stone-950: var(--stone-950);
+  --color-stone-900: var(--stone-900);
+  --color-stone-800: var(--stone-800);
+  --color-stone-700: var(--stone-700);
+  --color-stone-600: var(--stone-600);
+  --color-stone-500: var(--stone-500);
+  --color-stone-400: var(--stone-400);
+  --color-stone-300: var(--stone-300);
+  --color-stone-200: var(--stone-200);
+  --color-stone-100: var(--stone-100);
+  --color-stone-50: var(--stone-50);
+  --color-line: var(--line);
+
+  --color-teal-950: var(--teal-950);
+  --color-teal-900: var(--teal-900);
+  --color-teal-800: var(--teal-800);
+  --color-teal-700: var(--teal-700);
+  --color-teal-600: var(--teal-600);
+  --color-teal-500: var(--teal-500);
+  --color-teal-100: var(--teal-100);
+  --color-teal-50: var(--teal-50);
+
+  --color-sand-500: var(--sand-500);
+  --color-sand-300: var(--sand-300);
+  --color-sand-100: var(--sand-100);
+  --color-cream: var(--cream);
+
+  --color-gold-600: var(--gold-600);
+  --color-gold-500: var(--gold-500);
+  --color-gold-400: var(--gold-400);
+
+  --color-success: var(--status-success);
+  --color-success-bg: var(--status-success-bg);
+  --color-warning: var(--status-warning);
+  --color-warning-bg: var(--status-warning-bg);
+  --color-error: var(--status-error);
+  --color-error-bg: var(--status-error-bg);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* Focus visibility for keyboard nav */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--teal-600);
+  outline-offset: 2px;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,156 @@
+// Aakriti Designs & Constructions — Database Schema
+// Postgres via Prisma. Deployed on Vercel Postgres in production.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// ------------------------------
+// Auth / Users
+// ------------------------------
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(EDITOR)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+// ------------------------------
+// Projects
+// ------------------------------
+
+enum ProjectStatus {
+  COMPLETED
+  ONGOING
+  UPCOMING
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  sortOrder Int       @default(0)
+  projects  Project[]
+
+  @@map("categories")
+}
+
+model Project {
+  id            String        @id @default(cuid())
+  title         String
+  slug          String        @unique
+  description   String        @db.Text
+  additionalInfo String?      @db.Text
+  location      String
+  categoryId    String
+  category      Category      @relation(fields: [categoryId], references: [id])
+  year          Int
+  status        ProjectStatus @default(COMPLETED)
+  coverImage    String?
+  builtUpArea   String?
+  floors        String?
+  duration      String?
+  published     Boolean       @default(false)
+  featured      Boolean       @default(false)
+  sortOrder     Int           @default(0)
+  images        ProjectImage[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([published])
+  @@index([categoryId])
+  @@map("projects")
+}
+
+model ProjectImage {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  altText   String   @default("")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@map("project_images")
+}
+
+// ------------------------------
+// Services
+// ------------------------------
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  image       String?
+  sortOrder   Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+// ------------------------------
+// Company / Site content (singleton row)
+// ------------------------------
+
+model CompanyContent {
+  id                String   @id @default("main")
+  companyName        String  @default("Aakriti Designs & Constructions")
+  tagline            String  @default("Designing today, building tomorrow.")
+  heroHeadline        String  @default("Designing today,\nbuilding tomorrow.")
+  heroSubtext         String  @default("Architectural design and construction across residential, commercial, and interior projects in Karnataka.")
+  about               String  @db.Text @default("")
+  mission             String  @db.Text @default("")
+  vision              String  @db.Text @default("")
+  values              String  @db.Text @default("")
+  yearsExperience     Int     @default(4)
+  projectsCompleted   Int     @default(10)
+  address             String  @default("Near HP petrol bunk, Sirsi road, Banavasi")
+  phone               String  @default("+91 9019373002")
+  email               String  @default("aakritidca@gmail.com")
+  instagramHandle     String  @default("aakriti_design_construction_")
+  businessHours       String  @default("Mon – Sat: 9:00 AM – 6:00 PM")
+  mapEmbedUrl         String?
+  updatedAt           DateTime @updatedAt
+
+  @@map("company_content")
+}
+
+// ------------------------------
+// Contact form submissions
+// ------------------------------
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read, createdAt])
+  @@map("contact_messages")
+}
